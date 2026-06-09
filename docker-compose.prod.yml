@@ -32,7 +32,7 @@ services:
       postgres:
         condition: service_healthy
     networks:
-      - default
+      - contexto-internal
       - traefik
     labels:
       - traefik.enable=true
@@ -69,9 +69,12 @@ services:
       - traefik.http.services.contexto-web.loadbalancer.server.port=3000
 
 networks:
+  contexto-internal:
+    internal: true
   traefik:
     external: true
     name: ${TRAEFIK_NETWORK:-traefik}
 
 volumes:
   uploads:
+    name: contexto-uploads

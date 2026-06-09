@@ -1,6 +1,10 @@
+name: contexto
+
 services:
   postgres:
     image: pgvector/pgvector:pg16
+    networks:
+      - contexto-internal
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
@@ -13,5 +17,10 @@ services:
       timeout: 5s
       retries: 5
 
+networks:
+  contexto-internal:
+    name: contexto-internal
+
 volumes:
   postgres_data:
+    name: contexto-postgres-data

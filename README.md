@@ -25,6 +25,13 @@ Landing page (when running `npm run dev:frontend`).
 <img width="1799" height="945" alt="image" src="https://github.com/user-attachments/assets/df545ba3-7c06-4c21-9943-b2bb45bf844e" />
 </details>
 
+<details>
+<summary>Chat (in workspace)</summary>
+
+<img width="2540" height="1284" alt="image" src="https://github.com/user-attachments/assets/5d63a705-4382-4cea-9954-b37cb2b586d1" />
+</details>
+
+
 ---
 
 ## Overview

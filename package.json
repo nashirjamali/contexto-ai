@@ -1,0 +1,31 @@
+{
+  "name": "contexto",
+  "version": "0.0.0",
+  "private": true,
+  "workspaces": [
+    "apps/*"
+  ],
+  "scripts": {
+    "dev": "nx run-many -t serve,dev -p backend,frontend --parallel",
+    "dev:backend": "nx serve backend",
+    "dev:frontend": "nx dev frontend",
+    "build": "nx run-many -t build -p backend,frontend",
+    "lint": "nx run-many -t lint",
+    "test": "nx run-many -t test",
+    "docker:up": "docker compose up -d",
+    "docker:down": "docker compose down"
+  },
+  "devDependencies": {
+    "@nx/eslint": "22.7.5",
+    "@nx/jest": "22.7.5",
+    "@nx/next": "22.7.5",
+    "eslint": "~8.57.0",
+    "jest": "~30.3.0",
+    "nx": "22.7.5"
+  },
+  "overrides": {
+    "react": "19.1.0",
+    "react-dom": "19.1.0",
+    "next": "15.5.19"
+  }
+}

@@ -1,0 +1,91 @@
+@import "tailwindcss";
+
+:root {
+  --ink: #0f1219;
+  --surface: #181c27;
+  --surface-raised: #222836;
+  --paper: #e8e4dc;
+  --paper-muted: #8a8698;
+  --bronze: #d4a574;
+  --bronze-dim: #a67c52;
+  --sage: #6b9b8a;
+  --ember: #c45c4a;
+}
+
+@theme inline {
+  --color-ink: var(--ink);
+  --color-surface: var(--surface);
+  --color-surface-raised: var(--surface-raised);
+  --color-paper: var(--paper);
+  --color-paper-muted: var(--paper-muted);
+  --color-bronze: var(--bronze);
+  --color-bronze-dim: var(--bronze-dim);
+  --color-sage: var(--sage);
+  --color-ember: var(--ember);
+  --font-family-display: var(--font-newsreader), serif;
+  --font-family-body: var(--font-dm-sans), sans-serif;
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0) rotate(-2deg);
+  }
+  50% {
+    transform: translateY(-8px) rotate(-2deg);
+  }
+}
+
+.animate-fade-up {
+  animation: fade-up 0.8s ease-out both;
+}
+
+.animate-fade-up-delay-1 {
+  animation: fade-up 0.8s ease-out 0.15s both;
+}
+
+.animate-fade-up-delay-2 {
+  animation: fade-up 0.8s ease-out 0.3s both;
+}
+
+.animate-fade-up-delay-3 {
+  animation: fade-up 0.8s ease-out 0.45s both;
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+body {
+  background: var(--ink);
+  color: var(--paper);
+  font-family: var(--font-dm-sans), sans-serif;
+}
+
+.grain::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 50;
+  opacity: 0.04;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.mesh-bg {
+  background:
+    radial-gradient(ellipse 60% 50% at 20% 40%, rgba(212, 165, 116, 0.08), transparent),
+    radial-gradient(ellipse 50% 40% at 80% 60%, rgba(107, 155, 138, 0.06), transparent),
+    var(--ink);
+}

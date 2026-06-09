@@ -1,0 +1,10 @@
+services:
+  postgres:
+    container_name: contexto-postgres
+    restart: unless-stopped
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: contexto

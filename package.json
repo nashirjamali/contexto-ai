@@ -13,7 +13,10 @@
     "lint": "nx run-many -t lint",
     "test": "nx run-many -t test",
     "docker:up": "docker compose up -d",
-    "docker:down": "docker compose down"
+    "docker:down": "docker compose down",
+    "docker:prod:up": "docker compose -f docker-compose.yml -f docker-compose.prod.yml --env-file .env.production up -d --build",
+    "docker:prod:down": "docker compose -f docker-compose.yml -f docker-compose.prod.yml --env-file .env.production down",
+    "docker:prod:logs": "docker compose -f docker-compose.yml -f docker-compose.prod.yml --env-file .env.production logs -f"
   },
   "devDependencies": {
     "@nx/eslint": "22.7.5",

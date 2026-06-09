@@ -1,0 +1,14 @@
+node_modules
+dist
+.next
+.git
+.env
+.env.*
+!.env.production.example
+uploads
+coverage
+.nx
+*.log
+.agents
+.cursor
+docs

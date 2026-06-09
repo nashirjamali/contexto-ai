@@ -19,9 +19,11 @@ Landing page (when running `npm run dev:frontend`).
 
 </details>
 
-Upload document (in workspace)
-<img width="1799" height="945" alt="image" src="https://github.com/user-attachments/assets/df545ba3-7c06-4c21-9943-b2bb45bf844e" />
+<details>
+<summary>Upload document (in workspace)</summary>
 
+<img width="1799" height="945" alt="image" src="https://github.com/user-attachments/assets/df545ba3-7c06-4c21-9943-b2bb45bf844e" />
+</details>
 
 ---
 

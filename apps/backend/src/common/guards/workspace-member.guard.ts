@@ -25,6 +25,9 @@ export class WorkspaceMemberGuard implements CanActivate {
     }
 
     request.membership = membership;
+    if (request.user) {
+      request.user.membershipRole = membership.role;
+    }
     return true;
   }
 }

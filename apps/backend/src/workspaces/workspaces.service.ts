@@ -1,7 +1,19 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  ForbiddenException,
+  Inject,
+  Injectable,
+  NotFoundException,
+  forwardRef,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { UsageRecord } from '../billing/entities/usage-record.entity';
 import { MembershipRole } from '../common/enums/membership-role.enum';
+import { Conversation } from '../conversations/entities/conversation.entity';
+import { Message } from '../conversations/entities/message.entity';
+import { DocumentsService } from '../documents/documents.service';
+import { Document } from '../documents/entities/document.entity';
+import { Organization } from '../organizations/entities/organization.entity';
 import { OrganizationsService } from '../organizations/organizations.service';
 import { UsersService } from '../users/users.service';
 import { CreateWorkspaceDto } from './dto/create-workspace.dto';
@@ -16,6 +28,18 @@ export class WorkspacesService {
     private workspacesRepository: Repository<Workspace>,
     @InjectRepository(Membership)
     private membershipsRepository: Repository<Membership>,
+    @InjectRepository(Organization)
+    private organizationsRepository: Repository<Organization>,
+    @InjectRepository(UsageRecord)
+    private usageRecordsRepository: Repository<UsageRecord>,
+    @InjectRepository(Conversation)
+    private conversationsRepository: Repository<Conversation>,
+    @InjectRepository(Message)
+    private messagesRepository: Repository<Message>,
+    @InjectRepository(Document)
+    private documentsRepository: Repository<Document>,
+    @Inject(forwardRef(() => DocumentsService))
+    private documentsService: DocumentsService,
     private organizationsService: OrganizationsService,
     private usersService: UsersService,
   ) {}
@@ -98,6 +122,42 @@ export class WorkspacesService {
 
   async removeMember(workspaceId: string, userId: string): Promise<void> {
     await this.membershipsRepository.delete({ workspaceId, userId });
+  }
+
+  async remove(workspaceId: string, userId: string): Promise<void> {
+    const membership = await this.findMembership(workspaceId, userId);
+    if (!membership) {
+      throw new NotFoundException('Workspace not found');
+    }
+    if (membership.role !== MembershipRole.OWNER) {
+      throw new ForbiddenException('Only workspace owners can delete workspaces');
+    }
+
+    const workspace = await this.findById(workspaceId);
+    if (!workspace) {
+      throw new NotFoundException('Workspace not found');
+    }
+
+    const documents = await this.documentsRepository.find({
+      where: { workspaceId },
+    });
+    for (const document of documents) {
+      await this.documentsService.remove(document.id);
+    }
+
+    const conversations = await this.conversationsRepository.find({
+      where: { workspaceId },
+    });
+    for (const conversation of conversations) {
+      await this.messagesRepository.delete({ conversationId: conversation.id });
+    }
+    await this.conversationsRepository.delete({ workspaceId });
+    await this.membershipsRepository.delete({ workspaceId });
+    await this.usageRecordsRepository.delete({
+      organizationId: workspace.organizationId,
+    });
+    await this.workspacesRepository.delete(workspaceId);
+    await this.organizationsRepository.delete(workspace.organizationId);
   }
 
   async getOrganizationId(

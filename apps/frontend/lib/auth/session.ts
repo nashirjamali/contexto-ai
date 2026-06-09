@@ -25,6 +25,10 @@ export function setActiveWorkspaceId(id: string): void {
   localStorage.setItem(WORKSPACE_KEY, id);
 }
 
+export function clearActiveWorkspaceId(): void {
+  localStorage.removeItem(WORKSPACE_KEY);
+}
+
 export function getConversationKey(documentId: string): string {
   return `contexto_conversation_${documentId}`;
 }

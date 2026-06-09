@@ -42,3 +42,9 @@ export function removeMember(workspaceId: string, userId: string) {
     method: "DELETE",
   });
 }
+
+export function deleteWorkspace(workspaceId: string) {
+  return api(`/workspaces/${workspaceId}`, {
+    method: "DELETE",
+  });
+}

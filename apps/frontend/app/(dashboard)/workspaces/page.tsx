@@ -8,9 +8,8 @@ import { Header } from "@/components/layout/header";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { listWorkspaces, createWorkspace } from "@/lib/api/workspaces";
+import { WorkspaceList } from "@/components/workspaces/workspace-list";
 import { setActiveWorkspaceId } from "@/lib/auth/session";
-import { formatDate } from "@/lib/utils";
-import Link from "next/link";
 
 export default function WorkspacesPage() {
   const router = useRouter();
@@ -69,30 +68,7 @@ export default function WorkspacesPage() {
 
           {isLoading && <p className="text-paper-muted">Loading…</p>}
 
-          {!isLoading && workspaces.length === 0 && (
-            <div className="rounded-sm border border-surface-raised bg-surface p-12 text-center">
-              <p className="font-display text-xl text-paper">No workspaces yet</p>
-              <p className="mt-2 text-sm text-paper-muted">
-                Create your first workspace to get started.
-              </p>
-            </div>
-          )}
-
-          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-            {workspaces.map((ws) => (
-              <Link
-                key={ws.id}
-                href={`/workspaces/${ws.id}`}
-                onClick={() => setActiveWorkspaceId(ws.id)}
-                className="rounded-sm border border-surface-raised bg-surface p-6 transition-colors hover:border-bronze/40"
-              >
-                <p className="font-display text-xl text-paper">{ws.name}</p>
-                <p className="mt-2 text-xs text-paper-muted">
-                  Created {formatDate(ws.createdAt)}
-                </p>
-              </Link>
-            ))}
-          </div>
+          {!isLoading && <WorkspaceList workspaces={workspaces} />}
         </main>
       </div>
     </div>

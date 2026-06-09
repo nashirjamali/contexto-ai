@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Module, forwardRef } from '@nestjs/common';
 import { MulterModule } from '@nestjs/platform-express';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Conversation } from '../conversations/entities/conversation.entity';
@@ -23,7 +23,7 @@ import { Document } from './entities/document.entity';
     ]),
     MulterModule.register(documentUploadOptions),
     RagModule,
-    WorkspacesModule,
+    forwardRef(() => WorkspacesModule),
   ],
   controllers: [DocumentsController],
   providers: [DocumentsService],

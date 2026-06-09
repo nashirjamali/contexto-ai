@@ -42,6 +42,16 @@ export class WorkspacesController {
     return this.workspacesService.findById(id);
   }
 
+  @Delete(':id')
+  @UseGuards(WorkspaceMemberGuard, RolesGuard)
+  @Roles(MembershipRole.OWNER)
+  remove(
+    @Param('id') id: string,
+    @CurrentUser() user: { id: string },
+  ) {
+    return this.workspacesService.remove(id, user.id);
+  }
+
   @Post(':id/members')
   @UseGuards(WorkspaceMemberGuard, RolesGuard)
   @Roles(MembershipRole.OWNER, MembershipRole.ADMIN)
